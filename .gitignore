@@ -74,3 +74,5 @@ typings/
 
 # FuseBox cache
 .fusebox/
+artifacts/
+cache/solidity-files-cache.json

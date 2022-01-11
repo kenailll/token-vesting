@@ -401,7 +401,7 @@ async function getInitialContracts() {
     const _Vesting = await ethers.getContractFactory("ERC20Vesting");
     const Vesting = await _Vesting.deploy(TCVNtoken.address, 0);
     
-    await TCVNtoken.mint(Vesting.address, ethers.utils.parseEther('10000000000'));
+    await TCVNtoken.transfer(Vesting.address, ethers.utils.parseEther('10000000000'));
         
     console.log('Deploy done');
     return { TCVNtoken, Vesting }

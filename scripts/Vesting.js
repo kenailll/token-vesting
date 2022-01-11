@@ -3,14 +3,12 @@ const fs = require("fs");
 
 const deployfunc = require("./isDeployed.js");
 
-platform = 'bsc'
+platform = 'hardhat'
 network = 'mainnet'
 
 let accounts = []
 
 async function main(){
-    var args = process.argv.network
-    console.log(args)
     accounts = await ethers.getSigners();
     
     //startTime in seconds

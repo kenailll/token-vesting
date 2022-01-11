@@ -2,14 +2,15 @@ pragma solidity ^0.8.2;
 pragma abicoder v2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
 import "./hardhat/console.sol";
 
-interface ITCVNToken{
-    function mint(address _addr, uint256 _amount) external;
-}
-
 contract Vesting is Ownable {
-    ITCVNToken public token;
+    
+    using SafeERC20 for IERC20;
+    IERC20 public token;
     uint256 public startDate;
 
     uint256 public WEEK = 1 weeks;
@@ -61,24 +62,24 @@ contract Vesting is Ownable {
 
     function initToken(address _token) public onlyOwner {
         require(address(_token) != address(0), "revert init");
-        token = ITCVNToken(_token);
+        token = IERC20(_token);
     }
 
     function tgePublic() public onlyOwner {
         require(TGE_PUBLIC > 0, "TGE Public minted");
-        token.mint(_msgSender(), TGE_PUBLIC);
+        token.safeTransfer(_msgSender(), TGE_PUBLIC);
         TGE_PUBLIC = 0;
     }
 
     function tgeCommunity() public onlyOwner {
         require(TGE_COMMUNITY > 0, "TGE Community minted");
-        token.mint(_msgSender(), TGE_COMMUNITY);
+        token.safeTransfer(_msgSender(), TGE_COMMUNITY);
         TGE_COMMUNITY = 0;
     }
 
     function tgeLiquitdity() public onlyOwner {
         require(TGE_LIQUIDITY > 0, "TGE Liquitdity minted");
-        token.mint(_msgSender(), TGE_LIQUIDITY);
+        token.safeTransfer(_msgSender(), TGE_LIQUIDITY);
         TGE_LIQUIDITY = 0;
     }
 
@@ -97,7 +98,7 @@ contract Vesting is Ownable {
         }
 
         TEAM_LAST_UNLOCK += vestingTime * WEEK;
-        token.mint(_msgSender(), mintAmount);
+        token.safeTransfer(_msgSender(), mintAmount);
     }
 
     function communityVesting() public onlyOwner{
@@ -114,7 +115,7 @@ contract Vesting is Ownable {
         }
 
         COMMUNITY_LAST_UNLOCK += vestingTime * WEEK;
-        token.mint(_msgSender(), mintAmount);
+        token.safeTransfer(_msgSender(), mintAmount);
     }
 
     function foundationVesting() public onlyOwner{
@@ -132,7 +133,7 @@ contract Vesting is Ownable {
         }
 
         FOUNDATION_RESERVE_LAST_UNLOCK += vestingTime * WEEK;
-        token.mint(_msgSender(), mintAmount);
+        token.safeTransfer(_msgSender(), mintAmount);
     }
 
     function advisorVesting() public onlyOwner{
@@ -150,6 +151,6 @@ contract Vesting is Ownable {
         }
 
         ADVISOR_LAST_UNLOCK += vestingTime * WEEK;
-        token.mint(_msgSender(), mintAmount);
+        token.safeTransfer(_msgSender(), mintAmount);
     }
 }

@@ -3,6 +3,10 @@
         "bsc": {
             "TCVNtoken": "0x0d5845bd4cF0B72cfE5dFABfdA3073D8057efe8d",
             "ERC20Vesting": "0x11fb198ee964ed1951680dC5e61d69f4980BB477"
+        },
+        "hardhat": {
+            "TCVNtoken": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+            "ERC20Vesting": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
         }
     }
 }

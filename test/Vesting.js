@@ -310,7 +310,8 @@ async function getInitialContracts() {
     const Vesting = await _Vesting.deploy();
     
     await Vesting.initToken(TCVNtoken.address);
-
+    await TCVNtoken.transfer(Vesting.address, ethers.utils.parseEther('10000000000'));
+    
     console.log('Deploy done');
     return { TCVNtoken, Vesting }
 }
